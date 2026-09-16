@@ -1,0 +1,288 @@
+{
+  "config": {
+    "seed": 42,
+    "image_size": 128,
+    "batch_size": 32,
+    "learning_rate": 0.001,
+    "epochs": 20,
+    "num_workers": 0,
+    "patience": 5,
+    "train_fraction": 0.7,
+    "validation_fraction": 0.15,
+    "dataset_path": "data\\raw\\vehicle_images",
+    "output_path": "outputs\\ml\\baseline",
+    "test_fraction": 0.15000000000000005
+  },
+  "classes": [
+    "auto",
+    "bicycle",
+    "bus",
+    "car",
+    "concrete_mixer",
+    "tempo",
+    "tractor",
+    "truck_tanker",
+    "two_wheelers",
+    "vehicle_truck"
+  ],
+  "dataset_sizes": {
+    "train": 236,
+    "validation": 57,
+    "test": 38
+  },
+  "device": "cpu",
+  "gpu_name": null,
+  "best_epoch": 20,
+  "epochs_completed": 20,
+  "training_seconds": 465.7503415000392,
+  "test_metrics": {
+    "accuracy": 0.2631578947368421,
+    "macro_precision": 0.034482758620689655,
+    "macro_recall": 0.09090909090909091,
+    "macro_f1": 0.05000000000000001,
+    "confusion_matrix": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        0
+      ],
+      [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ]
+    ],
+    "per_class": {
+      "0": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "1": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "2": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "3": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "4": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "5": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "6": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "7": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "8": {
+        "precision": 0.3448275862068966,
+        "recall": 0.9090909090909091,
+        "f1": 0.5000000000000001
+      },
+      "9": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    },
+    "classification_report": {
+      "0": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "1": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "2": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "3": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "4": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "5": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "6": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "7": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "8": {
+        "precision": 0.3448275862068966,
+        "recall": 0.9090909090909091,
+        "f1": 0.5000000000000001
+      },
+      "9": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    },
+    "classes": [
+      "auto",
+      "bicycle",
+      "bus",
+      "car",
+      "concrete_mixer",
+      "tempo",
+      "tractor",
+      "truck_tanker",
+      "two_wheelers",
+      "vehicle_truck"
+    ],
+    "dataset_sizes": {
+      "train": 236,
+      "validation": 57,
+      "test": 38
+    },
+    "device": "cpu"
+  }
+}

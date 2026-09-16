@@ -12,6 +12,95 @@ from typing import Iterable, Mapping
 import pandas as pd
 
 
+REGION_MAP = {
+    "Andaman and Nicobar Islands": "South", "Andhra Pradesh": "South", "Arunachal Pradesh": "North-East",
+    "Assam": "North-East", "Bihar": "East", "Chandigarh": "North", "Chhattisgarh": "Central",
+    "Dadra and Nagar Haveli and Daman and Diu": "West", "Delhi": "North", "Goa": "West",
+    "Gujarat": "West", "Haryana": "North", "Himachal Pradesh": "North", "Jammu and Kashmir": "North",
+    "Jharkhand": "East", "Karnataka": "South", "Kerala": "South", "Ladakh": "North",
+    "Lakshadweep": "South", "Madhya Pradesh": "Central", "Maharashtra": "West", "Manipur": "North-East",
+    "Meghalaya": "North-East", "Mizoram": "North-East", "Nagaland": "North-East", "Odisha": "East",
+    "Puducherry": "South", "Punjab": "North", "Rajasthan": "North", "Sikkim": "North-East",
+    "Tamil Nadu": "South", "Telangana": "South", "Tripura": "North-East", "Uttar Pradesh": "North",
+    "Uttarakhand": "North", "West Bengal": "East",
+}
+
+
+def _require_market_columns(df: pd.DataFrame) -> None:
+    validate_required_columns(df, ["year", "state", "registrations"])
+
+
+def yearly_market_growth(df: pd.DataFrame) -> pd.DataFrame:
+    """Aggregate registrations by year and calculate year-over-year growth."""
+    _require_market_columns(df)
+    out = df.groupby("year", as_index=False)["registrations"].sum().sort_values("year")
+    out["previous_year_registrations"] = out["registrations"].shift(1)
+    out["yoy_growth_pct"] = (out["registrations"] - out["previous_year_registrations"]) / out["previous_year_registrations"] * 100
+    return out.rename(columns={"registrations": "total_registrations"})
+
+
+def cagr_value(df: pd.DataFrame) -> float | None:
+    """Calculate CAGR over the observed year span, or return None when invalid."""
+    yearly = yearly_market_growth(df)
+    if len(yearly) < 2:
+        return None
+    start, end = float(yearly.iloc[0].total_registrations), float(yearly.iloc[-1].total_registrations)
+    years = int(yearly.iloc[-1].year - yearly.iloc[0].year)
+    if start <= 0 or end < 0 or years <= 0:
+        return None
+    return ((end / start) ** (1 / years) - 1) * 100
+
+
+def state_analysis(df: pd.DataFrame) -> pd.DataFrame:
+    _require_market_columns(df)
+    out = df.groupby("state", as_index=False)["registrations"].sum().rename(columns={"registrations": "total_registrations"})
+    total = out["total_registrations"].sum()
+    out["share_of_total_pct"] = out["total_registrations"] / total * 100 if total else pd.NA
+    return out.sort_values("total_registrations", ascending=False)
+
+
+def state_year_growth(df: pd.DataFrame) -> pd.DataFrame:
+    _require_market_columns(df)
+    out = df.groupby(["state", "year"], as_index=False)["registrations"].sum().sort_values(["state", "year"])
+    out["previous_year_registrations"] = out.groupby("state")["registrations"].shift(1)
+    out["yoy_growth_pct"] = (out["registrations"] - out["previous_year_registrations"]) / out["previous_year_registrations"] * 100
+    return out.rename(columns={"registrations": "total_registrations"})
+
+
+def manufacturer_analysis(df: pd.DataFrame) -> pd.DataFrame:
+    _require_market_columns(df)
+    if "manufacturer" not in df.columns:
+        return pd.DataFrame(columns=["manufacturer", "total_registrations", "market_share_pct"])
+    out = df.groupby("manufacturer", as_index=False)["registrations"].sum().rename(columns={"registrations": "total_registrations"})
+    total = out["total_registrations"].sum()
+    out["market_share_pct"] = out["total_registrations"] / total * 100 if total else pd.NA
+    return out.sort_values("total_registrations", ascending=False)
+
+
+def category_analysis(df: pd.DataFrame) -> pd.DataFrame:
+    _require_market_columns(df)
+    if "vehicle_category" not in df.columns:
+        return pd.DataFrame(columns=["vehicle_category", "total_registrations"])
+    return df.groupby("vehicle_category", as_index=False)["registrations"].sum().rename(columns={"registrations": "total_registrations"}).sort_values("total_registrations", ascending=False)
+
+
+def category_year_growth(df: pd.DataFrame) -> pd.DataFrame:
+    _require_market_columns(df)
+    if "vehicle_category" not in df.columns:
+        return pd.DataFrame(columns=["vehicle_category", "year", "total_registrations", "yoy_growth_pct"])
+    out = df.groupby(["vehicle_category", "year"], as_index=False)["registrations"].sum().sort_values(["vehicle_category", "year"])
+    out["previous_year_registrations"] = out.groupby("vehicle_category")["registrations"].shift(1)
+    out["yoy_growth_pct"] = (out["registrations"] - out["previous_year_registrations"]) / out["previous_year_registrations"] * 100
+    return out.rename(columns={"registrations": "total_registrations"})
+
+
+def regional_analysis(df: pd.DataFrame) -> pd.DataFrame:
+    _require_market_columns(df)
+    out = df.copy()
+    out["region"] = out["state"].map(REGION_MAP)
+    return out.groupby("region", as_index=False)["registrations"].sum().rename(columns={"registrations": "total_registrations"}).sort_values("total_registrations", ascending=False)
+
+
 def validate_required_columns(df: pd.DataFrame, required_columns: Iterable[str]) -> pd.DataFrame:
     """Validate a DataFrame contains all required columns before computing a metric."""
     columns = list(required_columns)
