@@ -554,9 +554,11 @@ Market-Business-Strategy-Intelligence/
 
 ---
 
-## Author
+### Author
 
-**Tanya Verma**  
-*Business Intelligence & Strategy Intelligence Enthusiast*  
-LinkedIn: [linkedin.com/in/tanyaverma20](https://www.linkedin.com/in/tanyaverma20)  
-GitHub: [github.com/tanyaverma20](https://github.com/tanyaverma20)
+**Rayan Sharma**  
+*Data Analytics & Business Strategy Enthusiast*
+
+LinkedIn: [rayansharma](https://www.linkedin.com/in/rayansharma-/)
+
+GitHub: [rsharma2be23-cloud](https://github.com/rsharma2be23-cloud)
